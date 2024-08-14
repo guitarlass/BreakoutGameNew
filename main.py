@@ -68,11 +68,11 @@ while game_on:
     elif ball.ycor() >= 235:
         ball.bounce_y()
 
-    if ball.ycor() <= -215:# ball.distance(paddle) <= 50 and
+    if ball.ycor() < -215 and paddle.xcor() + (4 * 20) > ball.xcor() > paddle.xcor() - (4 * 20):
         ball.bounce_y()
-    # elif ball.ycor() <= -215:
-    #     print("Game Over")
-    #     game_on = False
+    elif ball.ycor() <= -250:
+        print("Game Over")
+        game_on = False
 
     for brick_obj in bricks:
         size = brick_obj.shapesize()

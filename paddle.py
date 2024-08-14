@@ -12,7 +12,9 @@ class Paddle(turtle.Turtle):
         self.speed(0)
 
     def move_right(self):
-        self.setx(self.xcor() + 20)
+        if self.xcor() + (4 * 20) < 400:
+            self.setx(self.xcor() + 20)
 
     def move_left(self):
-        self.setx(self.xcor() - 20)
+        if self.xcor() - (4 * 20) > -400:
+            self.setx(self.xcor() - 20)
