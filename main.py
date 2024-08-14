@@ -82,7 +82,6 @@ while game_on:
                 brick_obj.xcor() - full_half_width - brick_space_half < ball.xcor() < brick_obj.xcor() + full_half_width + brick_space_half and
                 brick_obj.ycor() - half_height - space_btw_lines_half < ball.ycor() < brick_obj.ycor() + half_height + space_btw_lines_half):
             # Determine which direction the collision occurred from
-            # print("hoi")
             score += 1
             label_score.clear()  # Clear the previous text
             label_score.write(score, align="center", font=("Arial", 18, "normal"))
@@ -106,4 +105,3 @@ while game_on:
             paddle.hideturtle()
             paddle.clear()
 
-    # print(len(bricks))
