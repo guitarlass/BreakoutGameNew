@@ -25,7 +25,7 @@ ball = Ball()
 paddle = Paddle()
 
 bricks = []
-brick_colors = ['green', 'yellow', 'orange', 'red']
+brick_colors = ['green', 'yellow', 'orange', 'red'] #
 brick_lengths = [4, 3, 2]
 
 end_x, end_y = (400, 160)
@@ -37,60 +37,29 @@ brick_width = 2
 full_half_width = brick_width * 20 / 2
 line_index = 0
 
-# while current_y <= end_y:
-#     remaining = end_x - current_x   # Calculate remaining space on the line
-#
-#     # Check if the remaining space is less than or equal to the width needed for the smallest brick
-#     if remaining <= min(brick_lengths) * 20:
-#         brick_len = max(1, math.ceil(remaining / 20))  # Ensure at least 1 grid unit width
-#     else:
-#         brick_len = random.choice(brick_lengths)
-#
-#     brick_centre_x = current_x + ((brick_len * 20) / 2)
-#     brick = Brick(brick_centre_x, current_y, brick_len, brick_width, brick_colors[line_index])
-#
-#     # Update current_x for the next brick
-#     current_x = brick_centre_x + ((brick_len * 20) / 2) + space
-#
-#     # Append the brick to the list
-#     bricks.append(brick)
-#
-#     # Check if we need to move to the next line
-#     if current_x + min(brick_lengths) * 20 / 2 >= end_x:
-#         current_y = current_y + brick_width * 20 + space
-#         current_x = -400
-#         line_index = (line_index + 1) % len(brick_colors)  # Cycle through brick colors
-#
-# # Print the number of bricks to verify
-# print(len(bricks))
 
 while current_x <= end_x and current_y <= end_y:
     remaining = 400-current_x
-    if remaining <= 90:
-        print(current_x)
-        print(remaining)
-        brick_len = current_x + math.ceil(remaining // 20)
+    if remaining <= min(brick_lengths) * 20:
+        brick_len = max(1, math.ceil(remaining / 20))  # Ensure at least 1 grid unit width
     else:
         brick_len = random.choice(brick_lengths)
     brick_centre_x = current_x + ((brick_len * 20)/2)
     brick = Brick(brick_centre_x, current_y, brick_len, brick_width, brick_colors[line_index])
     current_x = brick_centre_x + ((brick_len * 20) / 2) + space
     bricks.append(brick)
-    print(len(bricks))
-    # if brick_centre_x + ((brick_len * 20) / 2) >= 400:
-    if current_x + min(brick_lengths) * 20 / 2 >= end_x:
+    if current_x + min(brick_lengths) * 20 / 2 >= end_x: # if
         current_y = current_y + brick_width * 20 + space
         current_x = -400
-        line_index += 1
-        print("-----------")
-
-print(len(bricks))
+        line_index = (line_index + 1) % len(brick_colors)
 
 screen.listen()
 screen.onkeypress(paddle.move_right, "Right")
 screen.onkeypress(paddle.move_left, "Left")
 
-while True:
+game_on = True
+
+while game_on:
     screen.update()
     ball.move()
 
@@ -103,7 +72,7 @@ while True:
         ball.bounce_y()
     # elif ball.ycor() <= -215:
     #     print("Game Over")
-    #     break
+    #     game_on = False
 
     for brick_obj in bricks:
         size = brick_obj.shapesize()
@@ -113,7 +82,7 @@ while True:
                 brick_obj.xcor() - full_half_width - brick_space_half < ball.xcor() < brick_obj.xcor() + full_half_width + brick_space_half and
                 brick_obj.ycor() - half_height - space_btw_lines_half < ball.ycor() < brick_obj.ycor() + half_height + space_btw_lines_half):
             # Determine which direction the collision occurred from
-            print("hoi")
+            # print("hoi")
             score += 1
             label_score.clear()  # Clear the previous text
             label_score.write(score, align="center", font=("Arial", 18, "normal"))
@@ -132,5 +101,9 @@ while True:
             label_won.penup()
             label_won.goto(0, 0)
             label_won.write("YOU WON!", align="center", font=("Arial", 24, "normal"))
+            ball.hideturtle()
+            ball.clear()
+            paddle.hideturtle()
+            paddle.clear()
 
-        # print(len(bricks))
+    # print(len(bricks))

@@ -9,8 +9,8 @@ class Ball(turtle.Turtle):
         self.speed(1)
         self.penup()
         self.goto(0, -210)
-        self.x_distance = 1.5
-        self.y_distance = 1.5
+        self.x_distance = 5
+        self.y_distance = 5
 
     def move(self):
         self.setx(self.xcor() + self.x_distance)
