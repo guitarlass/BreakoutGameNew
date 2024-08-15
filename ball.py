@@ -21,3 +21,6 @@ class Ball(turtle.Turtle):
 
     def bounce_y(self):
         self.y_distance *= -1
+
+    def restart(self):
+        self.goto(0, -210)

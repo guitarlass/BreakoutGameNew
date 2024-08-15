@@ -7,6 +7,7 @@ import random
 import math
 
 score = 0
+lives = 5
 
 screen = turtle.Screen()
 screen.title("Breakout Game")
@@ -18,8 +19,15 @@ label_score = turtle.Turtle()
 label_score.hideturtle()
 label_score.color("white")
 label_score.penup()
-label_score.goto(-380, 210)
-label_score.write(score, align="center", font=("Arial", 18, "normal"))
+label_score.goto(-340, 210)
+label_score.write(f"Score : {score}", align="center", font=("Arial", 18, "normal"))
+
+label_lives = turtle.Turtle()
+label_lives.hideturtle()
+label_lives.color("white")
+label_lives.penup()
+label_lives.goto(340, 210)
+label_lives.write(f"Lives : {lives}", align="center", font=("Arial", 18, "normal"))
 
 ball = Ball()
 paddle = Paddle()
@@ -71,20 +79,28 @@ while game_on:
     if ball.ycor() < -215 and paddle.xcor() + (4 * 20) > ball.xcor() > paddle.xcor() - (4 * 20):
         ball.bounce_y()
     elif ball.ycor() <= -250:
-        print("Game Over")
-        game_on = False
+        lives -= 1
+        if lives == 0:
+            print("Game Over")
+            game_on = False
+        else:
+            ball.restart()
+            label_lives.clear()  # Clear the previous text
+            label_lives.write(f"Lives : {lives}", align="center", font=("Arial", 18, "normal"))
+
 
     for brick_obj in bricks:
         size = brick_obj.shapesize()
         length = size[1]
         half_height = length * 20 / 2
+        # detect collision with ball
         if (
                 brick_obj.xcor() - full_half_width - brick_space_half < ball.xcor() < brick_obj.xcor() + full_half_width + brick_space_half and
                 brick_obj.ycor() - half_height - space_btw_lines_half < ball.ycor() < brick_obj.ycor() + half_height + space_btw_lines_half):
             # Determine which direction the collision occurred from
             score += 1
             label_score.clear()  # Clear the previous text
-            label_score.write(score, align="center", font=("Arial", 18, "normal"))
+            label_score.write(f"Score : {score}", align="center", font=("Arial", 18, "normal"))
 
             if abs(ball.xcor() - brick_obj.xcor()) > abs(ball.ycor() - brick_obj.ycor()):
                 ball.bounce_x()
